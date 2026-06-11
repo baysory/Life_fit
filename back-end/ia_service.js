@@ -1,6 +1,6 @@
 // Importa a função 'montarPromptCoach' do arquivo de prompts.
 // Ela cria as instruções iniciais que definem a personalidade do Coach baseada no perfil do usuário.
-import { montarPromptCoach } from './prompt.service.js';
+import { montarPromptCoach } from './prompt_service.js';
 
 // Define a função principal que será exportada para ser usada em outros arquivos.
 // Ela é 'async' porque precisa esperar a resposta da IA (uma operação demorada).
