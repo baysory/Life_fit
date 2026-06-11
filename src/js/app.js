@@ -478,57 +478,59 @@ style.textContent = `
     /// EU NÃO FAÇO IDEIA DE COMO VOCÊ VAI IMPLEMENTAR A IA, VOU APRENDER JUNTO CONTIGO MAN !!!, ENTT TEMOS PROBLEMAAS
     /// NÃO VAMOS ESQUECER DE EXCLUIR A FUNÇÃO ANTIGA QUANDO FOR TESTAR ESSA AQUI, SE NÃO VAI DAR RUIM
 
-  async function enviarMensagemSimulada() {
-  const input = document.getElementById('campoMensagem');
-  const texto = input.value.trim();
+    /// selecione a linha 483 a 533, aperte ctrl + K e ctrl + C, Para tirar o código do comentario
 
-  if (!texto || !userProfile) return;
+//   async function enviarMensagemSimulada() {
+//   const input = document.getElementById('campoMensagem');
+//   const texto = input.value.trim();
 
-  conversationMemory.push({
-    type: 'user',
-    content: escapeHTML(texto),
-    time: new Date().toISOString()
-  });
+//   if (!texto || !userProfile) return;
 
-  saveConversation();
-  renderConversation();
+//   conversationMemory.push({
+//     type: 'user',
+//     content: escapeHTML(texto),
+//     time: new Date().toISOString()
+//   });
 
-  input.value = '';
-  showTypingIndicator();
+//   saveConversation();
+//   renderConversation();
 
-  try {
-    const resposta = await enviarMensagemParaCoach({
-      mensagem: texto,
-      perfil: userProfile,
-      historico: conversationMemory
-    });
+//   input.value = '';
+//   showTypingIndicator();
 
-    removeTypingIndicator();
+//   try {
+//     const resposta = await enviarMensagemParaCoach({
+//       mensagem: texto,
+//       perfil: userProfile,
+//       historico: conversationMemory
+//     });
 
-    conversationMemory.push({
-      type: 'bot',
-      content: resposta,
-      time: new Date().toISOString()
-    });
+//     removeTypingIndicator();
 
-    saveConversation();
-    renderConversation();
+//     conversationMemory.push({
+//       type: 'bot',
+//       content: resposta,
+//       time: new Date().toISOString()
+//     });
 
-  } catch (erro) {
-    removeTypingIndicator();
+//     saveConversation();
+//     renderConversation();
 
-    conversationMemory.push({
-      type: 'bot',
-      content: 'Não consegui conectar com o Coach agora. Tente novamente em instantes.',
-      time: new Date().toISOString()
-    });
+//   } catch (erro) {
+//     removeTypingIndicator();
 
-    saveConversation();
-    renderConversation();
+//     conversationMemory.push({
+//       type: 'bot',
+//       content: 'Não consegui conectar com o Coach agora. Tente novamente em instantes.',
+//       time: new Date().toISOString()
+//     });
 
-    console.error(erro);
-  }
-}
+//     saveConversation();
+//     renderConversation();
+
+//     console.error(erro);
+//   }
+// }
 
 /// FIM DO TESTE AKAKAK 
     renderizarNoticias();
