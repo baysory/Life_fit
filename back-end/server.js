@@ -14,6 +14,8 @@ dotenv.config();
 // É ela que vai falar com a Inteligência Artificial.
 import { gerarRespostaCoach } from './ia_service.js';
 
+import { montarPromptCoach } from './prompt_service.js';
+
 
 // Cria a aplicação do servidor usando o Express.
 const app = express();
