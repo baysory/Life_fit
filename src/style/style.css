@@ -1,0 +1,35 @@
+  html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .conteudo-artigo p {
+      margin-bottom: 1rem;
+    }
+
+    .conteudo-artigo h3 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #14532d;
+      margin-top: 1.5rem;
+      margin-bottom: .75rem;
+    }
+
+    .rolagem-chat::-webkit-scrollbar,
+    .rolagem-modal::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .rolagem-chat::-webkit-scrollbar-thumb,
+    .rolagem-modal::-webkit-scrollbar-thumb {
+      background: #86efac;
+      border-radius: 999px;
+    }
+
+    .rolagem-chat::-webkit-scrollbar-track,
+    .rolagem-modal::-webkit-scrollbar-track {
+      background: #f3f4f6;
+    }
