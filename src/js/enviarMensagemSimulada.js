@@ -10,6 +10,13 @@ function salvarConversa(memoria) {
   localStorage.setItem('lifeFitConversation', JSON.stringify(memoria));
 }
 
+function formatarResposta(texto) {
+  return texto
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\n\n/g, '<br><br>')
+    .replace(/\n/g, '<br>');
+}
+
 function renderizarConversa() {
   const mensagensChat = document.getElementById('mensagensChat');
   const memoria = JSON.parse(localStorage.getItem('lifeFitConversation')) || [];
@@ -83,7 +90,7 @@ export async function enviarMensagemSimulada() {
 
     conversationMemory.push({
       type: 'bot',
-      content: resposta,
+      content: formatarResposta(resposta),
       time: new Date().toISOString()
     });
 
