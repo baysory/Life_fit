@@ -5,7 +5,7 @@ export function salvarConversa() {
 
 
 // vai ser um saco refatorar isso. Vou fazer quando tiver mais tempo.
-// Por hora, so conecte ao código antigo do app.js. Linha 400 - 446
+// Por hora, so conecte código antigo do app.js. Linha 400 - 446
 
 //****
     // // Captura o formulário, valida os dados e salva o perfil no localStorage.
