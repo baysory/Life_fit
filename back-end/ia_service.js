@@ -33,8 +33,17 @@ export async function gerarRespostaCoach({ mensagem, perfil, historico = [] }) {
   ];
 
   // 3. Chamada à API de Inteligência Artificial
-  // Envia os dados para o servidor de IA usando o comando 'fetch' (nativo do JS).
-  const resposta = await fetch(process.env.IA_API_URL, {
+  // Se IA_API_URL for uma base, garante que o endpoint completo seja usado.
+  const baseUrl = process.env.IA_API_URL?.replace(/\/$/, '');
+  const apiUrl = baseUrl?.endsWith('/chat/completions')
+    ? baseUrl
+    : `${baseUrl}/chat/completions`;
+
+  if (!apiUrl) {
+    throw new Error('IA_API_URL não está configurada corretamente.');
+  }
+
+  const resposta = await fetch(apiUrl, {
     method: 'POST', // Método de envio de dados.
     headers: {
       'Content-Type': 'application/json', // Avisa que estamos enviando JSON.
@@ -42,7 +51,7 @@ export async function gerarRespostaCoach({ mensagem, perfil, historico = [] }) {
       'Authorization': `Bearer ${process.env.IA_API_KEY}`
     },
     body: JSON.stringify({
-      // Define qual modelo de IA usar (ex: gpt-4, gpt-3.5).
+      // Define qual modelo de IA usar (ex: qwen-3.5-397b-a17b).
       model: process.env.IA_MODEL,
       // Envia toda a lista de mensagens formatada acima.
       messages: mensagensFormatadas
