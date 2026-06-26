@@ -97,7 +97,7 @@ function fecharModalNoticia() {
 }
 
 // Alterna entre as abas Início e Coach sem recarregar a página.
-function irParaAba(tab) {
+function irParaAba(tab, coachSubform = 'register') {
   activeTab = tab;
 
   if (tab === 'home') {
@@ -120,10 +120,27 @@ function irParaAba(tab) {
 
     botaoNavInicio.classList.add('text-gray-500');
     botaoNavInicio.classList.remove('text-vida-verde');
+
+    mostrarCoachSubform(coachSubform);
   }
 
   menuAvatar.classList.add('hidden');
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function mostrarCoachSubform(formType) {
+  const areaCadastro = document.getElementById('areaCadastroCoach');
+  const areaLogin = document.getElementById('areaLoginCoach');
+
+  if (!areaCadastro || !areaLogin) return;
+
+  if (formType === 'login') {
+    areaCadastro.classList.add('hidden');
+    areaLogin.classList.remove('hidden');
+  } else {
+    areaCadastro.classList.remove('hidden');
+    areaLogin.classList.add('hidden');
+  }
 }
 
 function atualizarBarraSuperior() {
@@ -379,7 +396,7 @@ function removerDigitando() {
 function normalizarTexto(text) {
   return text
     .toLowerCase()
-    .normalizarTexto('NFD')
+    .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '');
 }
 
@@ -413,11 +430,13 @@ document.getElementById('formularioCoach').addEventListener('submit', function (
   const weight = converterNumeroBrasileiro(document.getElementById('campoPeso').value);
   const height = converterNumeroBrasileiro(document.getElementById('campoAltura').value);
   const goal = converterNumeroBrasileiro(document.getElementById('campoMeta').value);
+  const password = document.getElementById('campoSenhaCadastro').value.trim();
+  const sexo = document.getElementById('campoSexo').value;
 
   avisoFormulario.classList.add('hidden');
   avisoFormulario.textContent = '';
 
-  if (!name || !email || !weight || !height || !goal) {
+  if (!name || !email || !weight || !height || !goal || !password || !sexo) {
     avisoFormulario.textContent = 'Preencha todos os campos corretamente.';
     avisoFormulario.classList.remove('hidden');
     return;
@@ -437,7 +456,9 @@ document.getElementById('formularioCoach').addEventListener('submit', function (
     email,
     weight,
     height,
-    goal
+    goal,
+    password,
+    sexo
   };
 
   isLogged = true;
@@ -451,6 +472,41 @@ document.getElementById('formularioCoach').addEventListener('submit', function (
   atualizarTelaCoach();
   mostrarNotificacao('Perfil criado com sucesso.');
 });
+
+document.getElementById('Login-conta').addEventListener('submit', processarLoginConta);
+
+function processarLoginConta(event) {
+  event.preventDefault();
+
+  const email = document.getElementById('campoEmailLogin').value.trim().toLowerCase();
+  const password = document.getElementById('campoSenha').value.trim();
+
+  if (!email || !password) {
+    mostrarNotificacao('Preencha email e senha para entrar.');
+    return;
+  }
+
+  const savedProfile = JSON.parse(localStorage.getItem('lifeFitUserProfile'));
+
+  if (!savedProfile || savedProfile.email?.toLowerCase() !== email) {
+    mostrarNotificacao('Email não encontrado. Crie um perfil primeiro.');
+    return;
+  }
+
+  if (savedProfile.password !== password) {
+    mostrarNotificacao('Senha incorreta. Tente novamente.');
+    return;
+  }
+
+  userProfile = savedProfile;
+  isLogged = true;
+  conversationMemory = JSON.parse(localStorage.getItem('lifeFitConversation')) || [];
+
+  localStorage.setItem('lifeFitLogged', 'true');
+  atualizarBarraSuperior();
+  atualizarTelaCoach();
+  mostrarNotificacao('Login realizado com sucesso.');
+}
 
 document.addEventListener('click', function (event) {
   const userActionsBox = document.getElementById('acoesUsuario');
@@ -552,3 +608,4 @@ window.perguntarSugestao = perguntarSugestao;
 window.rolarParaNoticias = rolarParaNoticias;
 window.reiniciarPerfilCoach = reiniciarPerfilCoach;
 window.mostrarAvisoConta = mostrarAvisoConta;
+window.mostrarCoachSubform = mostrarCoachSubform;
